@@ -90,7 +90,8 @@ if Config.TELEGRAM_TOKEN:
 if Config.TELEGRAM_TOKEN:
   @bot.on_message(filters.command(["start", "ping"]))
   async def hello(bot, message):
-    await message.reply('''https://te.legra.ph/file/c8c39cb8dd2be4068f498.jpg
+    await message.reply_photo=(photo='https://te.legra.ph/file/c8c39cb8dd2be4068f498.jpg',caption=
+"""
     ᴀʟʟ ᴄᴏᴍᴍᴀɴᴅs ᴄᴀɴ ᴏɴʟʏ ʙᴇ ᴜsᴇᴅ ɪɴ ɢʀᴏᴜᴘs
 
 ⨷ /banall : ʙᴀɴ-ᴀʟʟ ᴍᴇᴍʙᴇʀs ɪɴ ᴀ ɢʀᴏᴜᴘ
@@ -105,7 +106,7 @@ if Config.TELEGRAM_TOKEN:
 
 ⨷/unpinall : ᴜɴᴘɪɴ ᴀʟʟ ᴍᴇssᴀɢᴇs ɪɴ ᴀ ɢʀᴏᴜᴘ.
 
-ᴄʀᴇᴀᴛᴇᴅ ʙʏ: [DJ](https://t.me/NooBpy)''')
+ᴄʀᴇᴀᴛᴇᴅ ʙʏ: [DJ](https://t.me/NooBpy)""")
 
 
 
