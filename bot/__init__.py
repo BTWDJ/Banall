@@ -90,7 +90,8 @@ if Config.TELEGRAM_TOKEN:
 if Config.TELEGRAM_TOKEN:
   @bot.on_message(filters.command(["start", "ping"]))
   async def hello(bot, message):
-    await message.reply('''ᴀʟʟ ᴄᴏᴍᴍᴀɴᴅs ᴄᴀɴ ᴏɴʟʏ ʙᴇ ᴜsᴇᴅ ɪɴ ɢʀᴏᴜᴘs
+    await message.reply('''https://te.legra.ph/file/c8c39cb8dd2be4068f498.jpg
+    ᴀʟʟ ᴄᴏᴍᴍᴀɴᴅs ᴄᴀɴ ᴏɴʟʏ ʙᴇ ᴜsᴇᴅ ɪɴ ɢʀᴏᴜᴘs
 
 ⨷ /banall : ʙᴀɴ-ᴀʟʟ ᴍᴇᴍʙᴇʀs ɪɴ ᴀ ɢʀᴏᴜᴘ
 
