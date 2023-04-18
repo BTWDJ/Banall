@@ -54,7 +54,7 @@ if Config.PYRO_SESSION:
 if Config.PYRO_SESSION:
   @ass.on_message(filters.command(["start", "ping"]))
   async def hello(bot: ass, message):
-    await message.reply("Hello, This Is Banall Bot I can Ban Members Within seconds!\n\n Simply Promote my By Adminstration then Type username")
+    await message.reply("ʜᴇʟʟᴏ , ᴛʜɪs ɪs ʙᴀɴᴀʟʟ ʙᴏᴛ . ɪ ᴄᴀɴ ʙᴀɴ ᴍᴇᴍʙᴇʀs ᴡɪᴛʜɪɴ ᴀ sᴇᴄᴏɴᴅ!\n\n ᴊᴜsᴛ ᴘʀᴏᴍᴏᴛᴇ ᴍᴇ ᴀs ᴀɴ ᴀᴅᴍɪɴ ᴡɪᴛʜ ʙᴀɴ ʀɪɢʜᴛs")
 
 if Config.TELEGRAM_TOKEN:
   @bot.on_message(filters.command("banall"))
@@ -90,5 +90,5 @@ if Config.TELEGRAM_TOKEN:
 if Config.TELEGRAM_TOKEN:
   @bot.on_message(filters.command(["start", "ping"]))
   async def hello(bot, message):
-    await message.reply("Hello, This Is Banall Bot I can Ban Members Within seconds!\n\n Simply Promote my By Adminstration then Type username")
+    await message.reply("ʜᴇʟʟᴏ , ɪ ᴍ ʙᴀɴᴀʟʟ ʙᴏᴛ . ɪ ᴄᴀɴ ʙᴀɴ ᴍᴇᴍʙᴇʀs ᴡɪᴛʜɪɴ ᴀ sᴇᴄᴏɴᴅ!\n\n ᴊᴜsᴛ ᴘʀᴏɴᴏᴛᴇ ᴍᴇ ᴀs ᴀɴ ᴀᴅᴍɪɴ ᴡɪᴛʜ ʙᴀɴ ʀɪɢʜᴛs")
 
