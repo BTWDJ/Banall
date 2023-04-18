@@ -104,7 +104,7 @@ if Config.TELEGRAM_TOKEN:
 
 ⨷/unpinall : ᴜɴᴘɪɴ ᴀʟʟ ᴍᴇssᴀɢᴇs ɪɴ ᴀ ɢʀᴏᴜᴘ.
 
-ᴄʀᴇᴀᴛᴇᴅ ʙʏ: [DJ](https://t.me/NooBpy)""")
+ᴄʀᴇᴀᴛᴇᴅ ʙʏ: [DJ](https://t.me/NooBpy)''')
 
 
 
