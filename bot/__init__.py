@@ -15,7 +15,7 @@ logging.basicConfig(
 )
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
-session_path = os.path.join(os.getcwd(), "sessions")
+session_path = os.path.abspath(os.path.join(os.getcwd(), "sessions"))
 
 # Ensure the session directory exists
 if not os.path.exists(session_path):
