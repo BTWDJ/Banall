@@ -8,6 +8,7 @@ import logging
 from pyrogram.errors import (
     ChatAdminRequired
 )
+import os
 logging.basicConfig(
     level=logging.DEBUG,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
