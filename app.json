@@ -1,7 +1,7 @@
   {
   "name": "Banall",
   "description": "help you to ban all members from the group",
-  "repository": "https://github.com/Chetanthakur03/Banall",
+  "repository": "https://github.com/btwdj/Banall",
   "keywords": [
     "telegram",
     "bot",
@@ -10,7 +10,7 @@
     "env": {
         "TELEGRAM_TOKEN": {
             "description": "bot token of your bot",
-            "required": false
+            "required": true
         },        
         "PYRO_SESSION": {
             "description": "An Pyrogram old session if Uh Want To Use In Userbot",
