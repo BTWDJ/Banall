@@ -99,7 +99,7 @@ if Config.TELEGRAM_TOKEN:
 if Config.TELEGRAM_TOKEN:
   @bot.on_message(filters.command(["start", "ping"]))
   async def hello(bot, message):
-    await message.reply_photo(photo='https://te.legra.ph/file/c8c39cb8dd2be4068f498.jpg',caption=
+    await message.reply_photo(photo='https://graph.org/file/c35671243a5649fa89488.jpg',caption=
 """
     ᴀʟʟ ᴄᴏᴍᴍᴀɴᴅs ᴄᴀɴ ᴏɴʟʏ ʙᴇ ᴜsᴇᴅ ɪɴ ɢʀᴏᴜᴘs
 
