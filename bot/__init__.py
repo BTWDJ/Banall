@@ -14,13 +14,20 @@ logging.basicConfig(
 )
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
-# Function to ensure time is logged
-def log_time():
-    current_time = datetime.now(timezone.utc)
-    logging.debug(f"Current system time: {current_time.isoformat()}")
+# Function to synchronize time
+def sync_time():
+    try:
+        ntp_client = ntplib.NTPClient()
+        response = ntp_client.request('pool.ntp.org')
+        current_time = datetime.utcfromtimestamp(response.tx_time)
+        os.environ['TZ'] = 'UTC'
+        os.system(f'date {current_time.strftime("%m%d%H%M%Y.%S")}')
+        logging.debug(f"Time synchronized to: {current_time.isoformat()}")
+    except Exception as e:
+        logging.error(f"Failed to synchronize time: {e}")
 
-# Log time at startup
-log_time()
+# Synchronize time at startup
+sync_time()
 
 # Define the absolute path for the session storage
 session_path = os.path.abspath(os.path.join(os.getcwd(), "sessions"))
