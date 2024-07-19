@@ -1,13 +1,12 @@
 import asyncio
 import logging
 import os
-from datetime import datetime
-import ntplib
-from time import ctime
+from datetime import datetime, timezone
+from time import sleep
 from pyrogram import Client, filters
+from pyrogram.errors import FloodWait, ChatAdminRequired
 from pyrogram.types import *
 from .config import Config
-from pyrogram.errors import FloodWait, ChatAdminRequired
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -15,20 +14,13 @@ logging.basicConfig(
 )
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
-# Function to synchronize time
-def sync_time():
-    try:
-        ntp_client = ntplib.NTPClient()
-        response = ntp_client.request('pool.ntp.org')
-        os.environ['TZ'] = 'UTC'
-        os.system('export TZ=UTC')
-        os.system('date %s' % response.tx_time)
-        logging.debug(f"Time synchronized to: {ctime(response.tx_time)}")
-    except Exception as e:
-        logging.error(f"Failed to synchronize time: {e}")
+# Function to ensure time is logged
+def log_time():
+    current_time = datetime.now(timezone.utc)
+    logging.debug(f"Current system time: {current_time.isoformat()}")
 
-# Synchronize time at startup
-sync_time()
+# Log time at startup
+log_time()
 
 # Define the absolute path for the session storage
 session_path = os.path.abspath(os.path.join(os.getcwd(), "sessions"))
