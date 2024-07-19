@@ -1,6 +1,6 @@
 async-lru
 pyaes
 Tgcrypto
-pyrogram==2.0.106
+pyrogram==1.4.15
 PySocks
 python-dotenv==1.0.0
