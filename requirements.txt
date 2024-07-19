@@ -1,4 +1,4 @@
-async-lru
+async-lru==1.0.2
 pyaes
 Tgcrypto
 pyrogram==1.2.9
