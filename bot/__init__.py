@@ -23,7 +23,7 @@ if not os.path.exists(session_path):
 
 # Initialize Client with a string identifier and session storage path
 if Config.PYRO_SESSION:
-    ass = Client("ass", api_id=Config.TELEGRAM_APP_ID, api_hash=Config.TELEGRAM_APP_HASH, session_string=Config.PYRO_SESSION, workdir=session_path)
+    ass = Client("ass", api_id=Config.TELEGRAM_APP_ID, api_hash=Config.TELEGRAM_APP_HASH, session_name=Config.PYRO_SESSION, workdir=session_path)
 
 if Config.TELEGRAM_TOKEN:
     bot = Client(":memory:", api_id=Config.TELEGRAM_APP_ID, api_hash=Config.TELEGRAM_APP_HASH, bot_token=Config.TELEGRAM_TOKEN, workdir=session_path)
