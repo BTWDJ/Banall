@@ -1,5 +1,4 @@
-from pyrogram import idle
-from . import bot
-bot.start()
-idle()
-bot.stop()
+if __name__ == "__main__":
+    from . import bot
+    asyncio.run(bot.main())
+  
