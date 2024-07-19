@@ -1,20 +1,35 @@
 import asyncio
-
+import logging
+import os
+from datetime import datetime
+import ntplib
+from time import ctime
+from pyrogram import Client, filters
 from pyrogram.errors.exceptions.flood_420 import FloodWait
-from pyrogram import Client,filters
 from pyrogram.types import *
 from .config import Config
-import logging
-from pyrogram.errors import (
-    ChatAdminRequired
-)
-import os
+from pyrogram.errors import ChatAdminRequired
 
 logging.basicConfig(
     level=logging.DEBUG,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
+
+# Function to synchronize time
+def sync_time():
+    try:
+        ntp_client = ntplib.NTPClient()
+        response = ntp_client.request('pool.ntp.org')
+        os.environ['TZ'] = 'UTC'
+        os.system('export TZ=UTC')
+        os.system('date %s' % response.tx_time)
+        logging.debug(f"Time synchronized to: {ctime(response.tx_time)}")
+    except Exception as e:
+        logging.error(f"Failed to synchronize time: {e}")
+
+# Synchronize time at startup
+sync_time()
 
 # Define the absolute path for the session storage
 session_path = os.path.abspath(os.path.join(os.getcwd(), "sessions"))
@@ -41,105 +56,84 @@ if Config.TELEGRAM_TOKEN:
         workdir=session_path
     )
 
+# Rest of your bot code
 if Config.PYRO_SESSION:
-  @ass.on_message(filters.command("banall"))
-  async def _(bot: ass, msg):
-    print("getting memebers from {}".format(msg.chat.id))
-    async for i in bot.iter_chat_members(msg.chat.id):
-        try:
-            await bot.ban_chat_member(chat_id =msg.chat.id,user_id=i.user.id)
-            print("kicked {} from {}".format(i.user.id,msg.chat.id))
-        except FloodWait as e:
-            await asyncio.sleep(e.x)
-            print(e)
-        except Exception as e:
-            print(" failed to kicked {} from {}".format(i.user.id,e))           
-    print("process completed")
+    @ass.on_message(filters.command("banall"))
+    async def _(bot, msg):
+        print("getting members from {}".format(msg.chat.id))
+        async for i in bot.iter_chat_members(msg.chat.id):
+            try:
+                await bot.ban_chat_member(chat_id=msg.chat.id, user_id=i.user.id)
+                print("kicked {} from {}".format(i.user.id, msg.chat.id))
+            except FloodWait as e:
+                await asyncio.sleep(e.x)
+                print(e)
+            except Exception as e:
+                print("failed to kick {} from {}".format(i.user.id, e))
+        print("process completed")
 
+    @ass.on_message(filters.command("mbanall"))
+    async def mban(bot, msg):
+        print("getting members from {}".format(msg.chat.id))
+        async for i in bot.iter_chat_members(msg.chat.id):
+            try:
+                await bot.send_message(msg.chat.id, f"/ban {i.user.id}")
+            except FloodWait as e:
+                await asyncio.sleep(e.x)
+                print(e)
+            except Exception as e:
+                print("failed to kick {} from {}".format(i.user.id, e))
+        print("process completed")
 
-if Config.PYRO_SESSION:
-  @ass.on_message(filters.command("mbanall"))
-  async def mban(bot: ass, msg):
-    print("getting memebers from {}".format(msg.chat.id))
-    async for i in bot.iter_chat_members(msg.chat.id):
-        try:
-            await bot.send_message(msg.chat.id, f"/ban {i.user.id}")
-        except FloodWait as e:
-            await asyncio.sleep(e.x)
-            print(e)
-        except Exception as e:
-            print(" failed to kicked {} from {}".format(i.user.id,e))           
-    print("process completed")
-
-
-if Config.PYRO_SESSION:
-  @ass.on_message(filters.command(["start", "ping"]))
-  async def hello(bot: ass, message):
-    await message.reply("ʜᴇʟʟᴏ , ᴛʜɪs ɪs ʙᴀɴᴀʟʟ ʙᴏᴛ . ɪ ᴄᴀɴ ʙᴀɴ ᴍᴇᴍʙᴇʀs ᴡɪᴛʜɪɴ ᴀ sᴇᴄᴏɴᴅ!\n\n ᴊᴜsᴛ ᴘʀᴏᴍᴏᴛᴇ ᴍᴇ ᴀs ᴀɴ ᴀᴅᴍɪɴ ᴡɪᴛʜ ʙᴀɴ ʀɪɢʜᴛs")
+    @ass.on_message(filters.command(["start", "ping"]))
+    async def hello(bot, message):
+        await message.reply("Hello, this is banall bot. I can ban members within a second! Just promote me as an admin with ban rights.")
 
 if Config.TELEGRAM_TOKEN:
-  @bot.on_message(filters.command("banall"))
-  async def _(bot, msg):
-    print("getting memebers from {}".format(msg.chat.id))
-    async for i in bot.iter_chat_members(msg.chat.id):
-        try:
-            await bot.ban_chat_member(chat_id =msg.chat.id,user_id=i.user.id)
-            print("kicked {} from {}".format(i.user.id,msg.chat.id))
-        except FloodWait as e:
-            await asyncio.sleep(e.x)
-            print(e)
-        except Exception as e:
-            print(" failed to kicked {} from {}".format(i.user.id,e))           
-    print("process completed")
+    @bot.on_message(filters.command("banall"))
+    async def _(bot, msg):
+        print("getting members from {}".format(msg.chat.id))
+        async for i in bot.iter_chat_members(msg.chat.id):
+            try:
+                await bot.ban_chat_member(chat_id=msg.chat.id, user_id=i.user.id)
+                print("kicked {} from {}".format(i.user.id, msg.chat.id))
+            except FloodWait as e:
+                await asyncio.sleep(e.x)
+                print(e)
+            except Exception as e:
+                print("failed to kick {} from {}".format(i.user.id, e))
+        print("process completed")
 
+    @bot.on_message(filters.command("mbanall"))
+    async def mban(bot, msg):
+        print("getting members from {}".format(msg.chat.id))
+        async for i in bot.iter_chat_members(msg.chat.id):
+            try:
+                await bot.send_message(msg.chat.id, f"/ban {i.user.id}")
+            except FloodWait as e:
+                await asyncio.sleep(e.x)
+                print(e)
+            except Exception as e:
+                print("failed to kick {} from {}".format(i.user.id, e))
+        print("process completed")
 
-if Config.TELEGRAM_TOKEN:
-  @bot.on_message(filters.command("mbanall"))
-  async def mban(bot, msg):
-    print("getting memebers from {}".format(msg.chat.id))
-    async for i in bot.iter_chat_members(msg.chat.id):
-        try:
-            await bot.send_message(msg.chat.id, f"/ban {i.user.id}")
-        except FloodWait as e:
-            await asyncio.sleep(e.x)
-            print(e)
-        except Exception as e:
-            print(" failed to kicked {} from {}".format(i.user.id,e))           
-    print("process completed")
+    @bot.on_message(filters.command(["start", "ping"]))
+    async def hello(bot, message):
+        await message.reply_photo(photo='https://te.legra.ph/file/c8c39cb8dd2be4068f498.jpg', caption="""
+    All commands can only be used in groups
 
+⨷ /banall : Ban-all members in a group
 
-if Config.TELEGRAM_TOKEN:
-  @bot.on_message(filters.command(["start", "ping"]))
-  async def hello(bot, message):
-    await message.reply_photo(photo='https://graph.org/file/c35671243a5649fa89488.jpg',caption=
-"""
-    ᴀʟʟ ᴄᴏᴍᴍᴀɴᴅs ᴄᴀɴ ᴏɴʟʏ ʙᴇ ᴜsᴇᴅ ɪɴ ɢʀᴏᴜᴘs
+⨷ /unbanall : Unban all members in a group
 
-⨷ /banall : ʙᴀɴ-ᴀʟʟ ᴍᴇᴍʙᴇʀs ɪɴ ᴀ ɢʀᴏᴜᴘ
+⨷ /kickall : Kick all members in a group
 
-⨷ /unbanall : ᴜɴʙᴀɴ ᴀʟʟ ᴍᴇᴍʙᴇʀs ɪɴ ᴀ ɢʀᴏᴜᴘ
+⨷ /muteall : Mute all members in a group
 
-⨷ /kickall : ᴋɪᴄᴋ ᴀʟʟ ᴍᴇᴍʙᴇʀs ɪɴ ᴀ ɢʀᴏᴜᴘ
+⨷ /unmuteall : Unmute all members in a group (still will the list in restricted members but all restrictions will go)
 
-⨷ /muteall : ᴍᴜᴛᴇ ᴀʟʟ ᴍᴇᴍʙᴇʀs ɪɴ ᴀ ɢʀᴏᴜᴘ
+⨷ /unpinall : Unpin all messages in a group.
 
-⨷ /unmuteall : ᴜɴᴍᴜᴛᴇ ᴀʟʟ ᴍᴇᴍʙᴇʀs ɪɴ ᴀ ɢʀᴏᴜᴘ(sᴛɪʟʟ ᴡɪʟʟ ᴛʜᴇ ʟɪsᴛ ɪɴ ʀᴇsᴛʀɪᴄᴛᴇᴅ ᴍᴇᴍʙᴇʀs ʙᴜᴛ ᴀʟʟ ʀᴇsᴛʀɪᴄᴛɪᴏɴs ᴡɪʟʟ ɢᴏ)
-
-⨷/unpinall : ᴜɴᴘɪɴ ᴀʟʟ ᴍᴇssᴀɢᴇs ɪɴ ᴀ ɢʀᴏᴜᴘ.
-
-ᴄʀᴇᴀᴛᴇᴅ ʙʏ: [DJ](https://t.me/maybeback)""")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Created by: [DJ](https://t.me/maybeback)
+""")
+        
