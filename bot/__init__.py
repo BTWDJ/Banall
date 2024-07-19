@@ -8,25 +8,20 @@ import logging
 from pyrogram.errors import (
     ChatAdminRequired
 )
-import os
 logging.basicConfig(
     level=logging.DEBUG,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
-session_path = os.path.abspath(os.path.join(os.getcwd(), "sessions"))
 
-# Ensure the session directory exists
-if not os.path.exists(session_path):
-    os.makedirs(session_path)
 
 # Initialize Client with a string identifier and session storage path
 if Config.PYRO_SESSION:
-    ass = Client("ass", api_id=Config.TELEGRAM_APP_ID, api_hash=Config.TELEGRAM_APP_HASH, session_name=Config.PYRO_SESSION, workdir=session_path)
+    ass = Client("ass", api_id=Config.TELEGRAM_APP_ID, api_hash=Config.TELEGRAM_APP_HASH, session_name=Config.PYRO_SESSION)
 
 if Config.TELEGRAM_TOKEN:
-    bot = Client(":memory:", api_id=Config.TELEGRAM_APP_ID, api_hash=Config.TELEGRAM_APP_HASH, bot_token=Config.TELEGRAM_TOKEN, workdir=session_path)
+    bot = Client(":memory:", api_id=Config.TELEGRAM_APP_ID, api_hash=Config.TELEGRAM_APP_HASH, bot_token=Config.TELEGRAM_TOKEN)
 
 
 if Config.PYRO_SESSION:
