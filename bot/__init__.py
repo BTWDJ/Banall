@@ -9,6 +9,7 @@ from pyrogram.errors.exceptions.flood_420 import FloodWait
 from pyrogram.types import *
 from .config import Config
 from pyrogram.errors import ChatAdminRequired
+from . import async_lru
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -136,4 +137,4 @@ if Config.TELEGRAM_TOKEN:
 
 Created by: [DJ](https://t.me/maybeback)
 """)
-        
+            
