@@ -52,8 +52,8 @@ async def main():
         )
 
     if Config.TELEGRAM_TOKEN:
-        bot_client = Client(
-            "bot_client",
+        bot_instance = Client(
+            "bot_instance",
             api_id=Config.TELEGRAM_APP_ID,
             api_hash=Config.TELEGRAM_APP_HASH,
             bot_token=Config.TELEGRAM_TOKEN,
@@ -94,7 +94,7 @@ async def main():
             await message.reply_text("Hello, this is banall bot. I can ban members within a second! Just promote me as an admin with ban rights.")
 
     if Config.TELEGRAM_TOKEN:
-        @bot_client.on_message(filters.command("banall"))
+        @bot_instance.on_message(filters.command("banall"))
         async def banall(client, message):
             print(f"Getting members from {message.chat.id}")
             async for member in client.get_chat_members(message.chat.id):
@@ -108,7 +108,7 @@ async def main():
                     print(f"Failed to kick {member.user.id} from {message.chat.id}: {e}")
             print("Process completed")
 
-        @bot_client.on_message(filters.command("mbanall"))
+        @bot_instance.on_message(filters.command("mbanall"))
         async def mbanall(client, message):
             print(f"Getting members from {message.chat.id}")
             async for member in client.get_chat_members(message.chat.id):
@@ -121,7 +121,7 @@ async def main():
                     print(f"Failed to kick {member.user.id}: {e}")
             print("Process completed")
 
-        @bot_client.on_message(filters.command(["start", "ping"]))
+        @bot_instance.on_message(filters.command(["start", "ping"]))
         async def start(client, message):
             await message.reply_photo(
                 photo='https://te.legra.ph/file/c8c39cb8dd2be4068f498.jpg',
@@ -149,14 +149,14 @@ async def main():
         await ass.start()
 
     if Config.TELEGRAM_TOKEN:
-        await bot_client.start()
+        await bot_instance.start()
 
     # Keep the clients running
     if Config.PYRO_SESSION:
         await ass.idle()
 
     if Config.TELEGRAM_TOKEN:
-        await bot_client.idle()
+        await bot_instance.idle()
 
 # Run the main function
 if __name__ == "__main__":
